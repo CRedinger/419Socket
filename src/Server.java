@@ -67,22 +67,13 @@ public class Server {
     } //end main
     
     private static boolean isPalindrome(String text) {
-    	int start = 0;
-    	int end = text.length()-1;
-    	boolean palindrome = true;
-    	while (start < end) {
-    		while(!Character.isLetterOrDigit(text.charAt(start)))
-    			start++;
-    		while(!Character.isLetterOrDigit(text.charAt(end)))
-    			end--;
-    		if(text.charAt(start) != text.charAt(end)) {
-    			palindrome = false;
-    			break;
-    		}
-    		start++;
-    		end--;
+    	int start = -1, end = text.length();
+    	while (start < end){
+    		while(!Character.isLetterOrDigit(text.charAt(start++))){}
+    		while(!Character.isLetterOrDigit(text.charAt(end--))){}
+    		if(text.charAt(start) != text.charAt(end))return false;
     	} //end loop through text
-    	return palindrome;
+    	return true;
     } //end isPalindrome
     
 } //end Class
