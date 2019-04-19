@@ -23,14 +23,21 @@ public class Server {
     //socket server port on which it will listen
     private static int port = 1200; //default port number
     
-    public static void main(String args[]) throws IOException, ClassNotFoundException{
-        if(args.length != 0) {
-	    	port = Integer.parseInt(args[0].substring(args[0].length() - 4));
+    	if(args.length == 1){ 
+    		String [] argPort = args[0].split("="); 
+    		if(argPort[0].equals("–port") && argPort.length == 2 && argPort[1].length() == 4) 
+    			port = Integer.parseInt(argPort[1]);
+    		else { 
+    			System.out.println("\nError: Unrecognized Argument.");
+    			System.out.println("\nArgument must be of the form: -port=####");
+    			System.exit(1);
+    		}		//Argument must be of the form -port=####
 	    	if(port < 1024) {
 	    		System.out.println("\nCannot use ports below 1024, try again.");
 	    		System.exit(1);
-	    	} //specified port must be greater than 1024
-        } //specified port condition
+	    	} 		//specified port must be greater than 1024
+        } 		//specified port condition
+	
         System.out.println("\nPort Number: " + port + "\n");
         //create the socket server object
         server = new ServerSocket(port);
@@ -67,22 +74,13 @@ public class Server {
     } //end main
     
     private static boolean isPalindrome(String text) {
-    	int start = 0;
-    	int end = text.length()-1;
-    	boolean palindrome = true;
-    	while (start < end) {
-    		while(!Character.isLetterOrDigit(text.charAt(start)))
-    			start++;
-    		while(!Character.isLetterOrDigit(text.charAt(end)))
-    			end--;
-    		if(text.charAt(start) != text.charAt(end)) {
-    			palindrome = false;
-    			break;
-    		}
-    		start++;
-    		end--;
-    	} //end loop through text
-    	return palindrome;
-    } //end isPalindrome
+    	int start = -1, end = text.length();
+    	while (start < end){
+    		while(!Character.isLetterOrDigit(text.charAt(start++))){}
+    		while(!Character.isLetterOrDigit(text.charAt(end--))){}
+    		if(text.charAt(start) != text.charAt(end))return false;
+    	} 		//end loop through text
+    	return true;
+    } 		//end isPalindrome
     
 } //end Class
